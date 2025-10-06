@@ -129,7 +129,7 @@ RUN chown -R www-data:www-data sites/default
 
 # See: https://github.com/docker/docker/issues/9299
 RUN echo "export TERM=xterm" >> ~/.bashrc
-RUN echo "export PATH=$PATH:/var/www/vendor/drush/drush" >> ~/.bashrc
+RUN echo "export PATH=/var/www/vendor/drush/drush:$PATH" >> ~/.bashrc
 
 # Drush
 RUN ln -s /var/www/vendor/drush/drush/drush /usr/local/bin/drush
