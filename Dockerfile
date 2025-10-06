@@ -90,6 +90,10 @@ RUN rm -f /var/www/composer.lock; \
     rm -rf /root/.composer
 RUN rm -rf /var/www/*
 COPY scripts/ScriptHandler.php /var/www/scripts/ScriptHandler.php
+
+# Addition from Ian Oct 3, 2025
+COPY scripts/clean-billboardjs.sh /var/www/scripts/clean-billboardjs.sh
+
 COPY composer.json composer.lock /var/www/
 # Copy possible custom modules and custom themes
 COPY html/modules/custom/ /var/www/html/modules/custom/
@@ -103,6 +107,9 @@ COPY load.environment.php /var/www/
 # Create the directory if it doesn't exist in the build context.
 RUN mkdir -p patches
 COPY patches/ /var/www/patches/
+
+# Add auth.json to allow pulling private repos
+COPY auth.json /var/www/
 
 WORKDIR /var/www
 
@@ -122,9 +129,13 @@ RUN chown -R www-data:www-data sites/default
 
 # See: https://github.com/docker/docker/issues/9299
 RUN echo "export TERM=xterm" >> ~/.bashrc
+RUN echo "export PATH=$PATH:/var/www/vendor/drush/drush" >> ~/.bashrc
 
 # Drush
 RUN ln -s /var/www/vendor/drush/drush/drush /usr/local/bin/drush
 
 # Reset Cache
 RUN php -r 'opcache_reset();'
+
+# Remove auth.json
+RUN rm /var/www/auth.json
