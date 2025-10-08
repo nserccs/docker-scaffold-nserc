@@ -109,7 +109,7 @@ RUN mkdir -p patches
 COPY patches/ /var/www/patches/
 
 # Create the privates files folder
-RUN mkdir -p files_private
+RUN mkdir -p /var/www/files_private
 
 # Add auth.json to allow pulling private repos
 COPY auth.json /var/www/
