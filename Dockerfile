@@ -24,7 +24,7 @@ RUN apk --update add --no-cache bash \
                                 postgresql-client \
                                 ssmtp \
                                 zlib-dev \
-								pico-editor
+								nano
 
 COPY docker/conf/ssmtp.conf /etc/ssmtp/ssmtp.conf
 RUN echo "hostname=drupalwxt.github.io" >> /etc/ssmtp/ssmtp.conf
