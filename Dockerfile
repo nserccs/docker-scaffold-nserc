@@ -23,7 +23,8 @@ RUN apk --update add --no-cache bash \
                                 patch \
                                 postgresql-client \
                                 ssmtp \
-                                zlib-dev
+                                zlib-dev \
+								pico-editor
 
 COPY docker/conf/ssmtp.conf /etc/ssmtp/ssmtp.conf
 RUN echo "hostname=drupalwxt.github.io" >> /etc/ssmtp/ssmtp.conf
@@ -109,7 +110,7 @@ RUN mkdir -p patches
 COPY patches/ /var/www/patches/
 
 # Create the privates files folder
-RUN mkdir -p /var/www/files_private
+RUN mkdir -p /var/www/private
 
 # Add auth.json to allow pulling private repos
 COPY auth.json /var/www/
